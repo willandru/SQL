@@ -1,3 +1,5 @@
+-- BASIC CONCEPTS
+
 select *
 from emp 
 where deptno  = 10 
@@ -32,6 +34,33 @@ from emp
 where salary <5000
 
 -- WHERE se evalua antes que SELECT¡¡
+
+-- CONCAT:: || ^ +  :: pARA CONCATENAR DOS O MAS COLUMNAS
+
+select ename || 'WORK AS A' || job as msg
+from emp
+where deptno=10
+
+
+-- Case expression to perfrom conditiona logic directlyy in your SELECT
+
+select ename , sal, 
+case when sal <= 2000 then 'UNDERPAID'
+when sal >= 4000 then 'OVERPAID'
+else 'OK'
+end as status
+from emp
+
+-- TO lIMIT THE NUMBER OF ROWS RETURNED ::
+
+rownum
+select *    ,   select top 5 *
+	from emp
+limit 5  ,   where rownum <=5 , from emp
+
+-- 
+
+
 
 
 
