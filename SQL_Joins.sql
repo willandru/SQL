@@ -1,4 +1,49 @@
+TABLA A Y TABLA B
+
+
+A:
 SELECT *
 FROM TableA A
 LEFT JOIN TableB TableA
 ON A.key=B.key
+
+A-(BnA):
+SELECT *
+FROM TableA A
+LEFT JOIN TableB B 
+ON A.key = B.key
+WHERE B.key IS NULL
+
+(AnB):
+SELECT *
+FROM TableA
+INNER JOINT TableB B
+ON A.Key=B.key
+
+B:
+SELECT *
+FROM TableA A
+RIGHT JOIN TableB B
+ON A.key=B.key
+
+B-(AnB)
+SELECT *
+FROM TableA A
+RIGHT JOIN TableB B
+ON A.key=B.key
+WHERE A.key IS NULL
+
+
+AuB:
+SELECT *
+FROM TableA A
+FULL OUTER JOIN TableB B
+ON A.Key=B.key
+
+(AuB)- (AnB):
+SELECT *
+FROM TableA A
+FULL OUTER JOIN TableB B
+ON A.Key=B.key
+WHERE A.key IS NULL 
+OR B.Key IS NULL
