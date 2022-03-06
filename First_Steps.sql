@@ -58,11 +58,21 @@ select *    ,   select top 5 *
 	from emp
 limit 5  ,   where rownum <=5 , from emp
 
--- 
+
+-- :: SUBCONSULTA EN EL FROM
+select * 
+from (
+select ename, job
+from emp
+order by dbms_random.value())
+where rownum <=5
 
 
+-- Finding NULL values
 
-
+select * 
+from empo
+where comm is null
 
 
 
