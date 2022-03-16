@@ -114,3 +114,130 @@ THE SELECT CLAUSE:
 
 	select 'A'
 	from instructor
+
+	select ID, name, salary/12
+	from instructor
+
+	select ID, name, salary/12 as monthly_salary
+
+THE WHERE CLAUSE:
+
+	select name
+	from instructor
+	where dept_name='Comp. Sci.'
+
+	and , or , not
+
+	select name 
+	from instructor
+	where dept_name ='Comp. Sci' and  salary >70000
+
+THE FROM CLAUSE:
+
+	Lista las relaciones/tablas de la consulta
+
+	select *
+	from instructor, teaches
+
+
+	select name, course_id
+	from 	instructor, teaches
+	where instructor.ID= teaches.ID
+
+
+	select name, course_id
+	from instructor, teaches 
+	where instructor.ID= teaches.ID
+		and instructor.dept_name ='Art'
+
+KEY WORD AS
+	select distinct T.name 
+	from instructor as T, instructor as S
+	where T.salary > S.salary and  S.dept_name ='Comp. Sci.'
+
+	instructor as T == instructor T
+
+STRING OPERATIONS
+
+	like : % busca substring
+			_ busca cualqueir caracter}
+
+	select name 
+	from instructor 
+	where name like '%dar%'
+
+
+	like '100\%' escape '\'
+
+	they are case sensitive
+
+	'Intro%' = Introduccion
+				Introductor
+	'%Comp%' = Computador
+				olaCompota
+
+	'___' = any string of excatly 3 characteres
+	'___%' = any string of at least 3 characteres
+
+
+	concatenation using ||
+	cnoverting from upper to lower
+	finding string length
+	extractign substrings
+
+ORDERING:
+
+	select distinct name 
+	from instructor
+	order by name
+
+	asc   desc
+
+	asc is defalut
+
+	order by name desc
+
+	order by dept_name, name
+
+BETWEEN:
+
+	select name 
+	from instructor
+	where salary between 90000 and 1000000
+
+TUPLE COMPARISION:
+
+	select name , course_id
+	from instructor, teaches
+	where (instructor.ID, dept_name) = (teaches.ID, 'Biology');
+
+SET OPERATIONS:
+
+	(select course_id from section where sem='Fall' and year= 2017)
+	union
+	(select course_id from section where sem= 'Spring' and year=2018)
+
+	(select course_id from section where sem='Fall' and year=2017)
+	intersect
+	(select course_id from section where sem= 'Spring' and year=2018)
+	
+	(select course_id from section where sem='Fall' and year=2017)
+	except
+	(select course_id from section where sem= 'Spring' and year=2018)
+
+
+NULL VALUES:
+
+	null
+
+	is null
+
+
+	select name
+	from instructor
+	where salary is null
+
+	is not null
+
+
+	

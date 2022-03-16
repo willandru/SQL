@@ -1,0 +1,3 @@
+
+create table estudiantes_ras(
+ID_est )
