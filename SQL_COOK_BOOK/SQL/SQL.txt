@@ -1,0 +1,289 @@
+MASTERING SQL
+
+*PONER UNA TALBA ENCIMA DE OTRA: Se quiere devolver datos guardados en más de una tabla, conceptualmente piniendo una tabla encima de la otra.
+
+	UNION ALL : Combina filas de multiples tablas en 1 resultado
+
+					SELECT enama AS ename_and_dname, deptno
+					FROM emp
+					WHERE deptno = 10
+					UNION ALL
+					SELECT '-------', NULL
+					FROM t1 
+					UNION ALL
+					SELECT dname, dptno
+					FROM dept
+
+
+	UNION: Si quiere filtrar las filas duplicadas : ELIMINAR DUPLICADOS
+
+					SELECT deptno
+					FROM emp
+					UNION
+					SELECT deptno
+					FROM dept
+
+
+				 equivalentemente
+
+					DISTINTC: No se utiliza distintc , a menos que toque. 
+
+					SELECT DISTINTC deptno
+					FROM (
+					SELECT deptno
+					FROM emp
+					UNION ALL
+					SELECT deptno
+					FROM dept)
+
+
+*QUIERES FILAS DE MULTIPLES TABLAS POR LA UNION DE UNA COLUMNA COMUN.
+
+	JOIN: Es una operación que combina filas de 2 tablas en 1.equi-join que es un tipo de INNER JOIN
+
+					SELECT e.ename, d.loc, 
+							e.deptno as emp_deptno,
+							d.deptno as dept_deptno
+					FROM emp e, dept d
+					WHERE e.deptno=d.deptno
+						 AND e.deptno=10	
+
+
+					equivalentemente
+
+					SELECT e.enama, d.loc
+					FROM emp e INNER JOIN dept e ON
+					(e.deptno= d.deptno)
+					WHERE e.deptno =10
+
+
+* ENCONTRAR FILAS COMUNES ENTRE 2 TABLAS: Hacer Join de las tablas en las COLUMNAS neecsarias para retornar el resultado
+										Alternativamente, utilice INTERSECT para evitar hacer un JOIN y retornar la interseccion en su lugar
+
+								CREATE VIEW V
+								AS
+								SELECT ename, job, sal, 
+								FROM emp
+								WHERE job ='CLERK'
+
+	INTERSECT: Returns attributes commun to both ROWS: Caundo se trabaja con SET OPERATIONS, por default, FILAS REPETIDAS no van  a aparecer.
+
+					SELECT empno, ename, job, sal, deptno
+					FROM emp
+					WHERE (ename, job, salary) IN (
+					SELECT ename, job, salary
+					FROM emp
+					INTERSECT
+					SELECT ename, job, sal 
+					FROM V)
+
+
+
+						MySQL - SQL Server
+
+						SELECT e.empno, e.ename, e.job, e.sal, e.deptno
+						FROM emp e, V
+						WHERE e.ename = v.ename
+						AND e.job = v.job
+						AND e.sal = v.sal
+
+
+*DEVOLVER VALORES DE UNA TABLA QUE NO ESTAN EN OTRA
+	
+	EXCEPT/MINUS: Toma el primer conjunto de datos y les remueve a estos todas las filas comunes que se encuentren el la 2 tabla. La operación es como una RESTA. No retorna duplicados 
+
+					SLECT deptno
+					FROM dept
+					MINUS
+					SELECT deptno
+					FROM emp
+
+
+
+						MySQL
+
+						SELECT deptno
+						FROM dept
+						WHERE deptno NOT IN ( SELECT deptno FROM emp)
+
+
+	Recuerda, en SQL: (TRUE || NULL)==TRUE
+					  (FALSE || NULL)== NULL
+
+					  Para evitar el problema de NULL's y de NOT IN, utilice una SUBQUERY CORRELACINOADA en conjunto con NOT EXIST
+
+
+					  NOT EXISTS:
+
+					  SELECT d.deptno
+					  FROM dept d
+					  WHERE NOT EXISTS (
+					  SELECT 1
+					  FROM emp e 
+					  WHERE d.deptno = e.deptno)
+
+					  		Los items en el SELECT de una subquery no tienen importancia cuando se utiliza una SUBQUERY CORRELACIONADA con EXISTS/NOT EXSTS 
+
+
+*OBTENER FILAS DE UNA TABLA QUE NO CORRESPONDEN CON FILAS EN OTRA TABLA: Quieres encontrar las filas de 1 Tabla que no tienen un match o que no se encuentran en la 2 Tabla. Es algo que el qui-join no puede mostrar. 
+
+	LEFT OUTER JOIN: Utilice un OUTER join y filtre por los NULL's 
+				Devuelva todas las filas de una Tabla junto con las filas de la otra Tabla, que puedan o no estar en comun. Depsues mantenga solo las filas que no tienen nada en comun
+
+				SELECT d.*
+				FROM dept d 
+				LEFT OUTER JOIN emp e
+				ON (d.deptno = e.deptno)
+				WHERE e.deptno IS NULL         <--- Esta es la forma de escoger las filas que NO tienen un match
+
+		El emparejamiento ocurre en las condiciones del join
+		Se incluyen las filas que se especifican en la primera Tabla, que NO TIENEN UN MATCH con la tabla despues del LEFT OUTER JOIN
+
+				SELECT part, supplier, parts.prod
+
+
+*AGREGAR JOIN A UN QUERY SIN INTERFERIR CON LOS  DATOS DE OTROS JOINS
+	
+	OUTTER JOIN
+
+		PROBLEMA: 
+
+		Primera Query:
+
+		SELECT e.ename, d.loc
+		FROM emp e, dept d
+		WHERE e.deptno= d.deptno
+
+			Quieres agregarle a esta tabla un BOnus: pero pierdes los datos de las filas NULL's
+			Segunda Query:
+
+			SELECT e.ename, d.loc, eb.received
+			FROM emp e, dept d, emp_bonus eb
+			WHERE e..deptno=d.deptno
+				AND e.empno=eb.empno
+
+		
+		SOLUCION:
+
+		SELECT e.ename, d.loc, eb.received
+		FROM emp e JOINT dept d ON ( e.deptno= d.deptno)
+		LEFT JOIN emp_bonus eb
+		ON (e.empno= eb.empno)
+		ORDER BY 2
+
+		alternativamente
+
+		SELECT e.ename, d.loc, ( SELECT eb.received 
+								 FROM emp_bonus eb
+								 WHERE eb.empno= e.empno) AS received
+		FROM emp e, dept d
+		WHERE e.deptno= d.deptno
+		ORDER BY 2
+
+
+
+*DETERMINAR SSI 2 TABLAS TIENEN LOS MISMOS DATOS: Quieres ver si 2 tablas o Vistas tienen la misma cardinalidad y valores
+
+		PROBLEMA: 
+
+			Primera Query
+
+			CREATE VIEW V
+			AS
+			SELECT * FROM emp WHERE deptno != 10
+			UNION ALL
+			SELECT * FROM emp WHERE ename = 'WARD'
+
+			Tu quieres determinar si esta vista tiene exactamente los mismos datos que la tabla EMP
+
+
+			(SELECT empno,  ename, job, mgr, hiredate, sal, comm, deptno, count(*) as cnt
+			 FROM V 
+			 GROUP BY empno , ename, job, mgr, hiredate, sal, comm, deptno
+			 MINUS
+			 SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno, count(*) as cnt
+			 FROM emp
+			 GROUP BY empno, ename, job mgr, heridate, sal, comm deptno)
+
+			 UNION ALL
+			 ........
+
+			 1. Encuentre filas en la tabla EMP que no existen en la Vista
+			 2. COmbine (UNion all) esas filas con las filas de la vista V que no existe en la tabla EMP
+
+*IDENTIFICANDO Y EVITANDO PRODUCTOS CARTESIANOS: Quieres retornar el nombre de cada empleado que trabaja en el departsmento 												junto con la ubicacion del departamento. 
+											Esta query es INCORRECT:
+											SELECT e.ename, d.loc
+											FROM emp e, dept d
+											WHERE e.deptno=10
+
+			SELECT e.ename , d.loc
+			FROM emp e, dept d
+			WHERE e.deptno=10
+			AND d.deptno=e.deptno
+
+
+*REALIZAR JOINS CUNADO SER HACER AGREGADOS
+
+		Tu quieres hacer un agregado pero tu query incluye multiples tablas. Tu quieres asegurar que los JOINS no disrpten la agregación.
+
+		Puedes encontrar la suma de los salarios para los empleados en el departamento 10 jubnto con la suma de sos bonos.
+		Algunos empleados tienen más de un bonus.
+
+		Considere la siguiente QUERY que returna el salario y los bonos para todos los empleados en departamento 10
+
+		SELECT e.empno, e.ename, e.sal, e.deptno, 
+			e.sal* CASE WHEN eb.type = 1 then .1
+						WHEN eb.type=2 then .2
+						ELSE .3
+					END AS bonus
+		FROM emp e, emp_bonus eb
+		WHERE e.empno = eb.empno
+		AND e.deptno =10
+
+		AHORA EL PROBLEMA OCURRE CUANDO INTENTAMOS: join EMP_BONUS para sumar los bonus
+
+			SELECT deptno , sum(sal) as total_sal, sum(bonus) as total_bonus
+			FROM (SELECT e.empno, e.ename, e.sal, e.deptno, 
+			e.sal* CASE WHEN eb.type = 1 then .1
+						WHEN eb.type=2 then .2
+						ELSE .3
+					END AS bonus
+		FROM emp e, emp_bonus eb
+		WHERE e.empno = eb.empno
+		AND e.deptno =10) X
+		GROUP BY deptno
+
+			Aqui, Total_bonus es correcto, pero Total_Sal es incorrecto. La razon es por las filas duplicadas creadas por el JOIN
+
+			Tienens que tener cuidado cuando computas AGREGADOS jnot con JOINS: Puedes evitar esto de 2 formas
+			SImplemente utilizando DISTINCT, o puedes hacer la agregacion primero y despues el join
+
+
+			SOLUCION: 
+
+			 	SELECT DISTINCT deptno , sum(sal) as total_sal, sum(bonus) as total_bonus
+				FROM (SELECT e.empno, e.ename, e.sal, e.deptno, 
+				e.sal* CASE WHEN eb.type = 1 then .1
+						WHEN eb.type=2 then .2
+						ELSE .3
+						END AS bonus
+					FROM emp e, emp_bonus eb
+					WHERE e.empno = eb.empno
+					AND e.deptno =10) X
+				GROUP BY deptno
+
+
+*HACER OUTTER JOINS CUNADO SE HACEN AGREGADOS
+
+				SELECT DISTINCT deptno , sum(sal) as total_sal, sum(bonus) as total_bonus
+				FROM (SELECT e.empno, e.ename, e.sal, e.deptno, 
+				e.sal* CASE WHEN eb.type IS NULL THEN 0
+						when eb.type = 1 then .1
+						WHEN eb.type=2 then .2
+						ELSE .3
+						END AS bonus
+					FROM emp e LEFT OUTER JOIN emp_bonus eb
+					ON(e.empno = eb.empno)
+					WHERE e.deptno =10) 
+				GROUP BY deptno
