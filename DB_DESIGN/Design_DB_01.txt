@@ -1,0 +1,28 @@
+Thre levels of ER model:   
+
+3 NIVELES: MODELO ER (Entidad /Relacion)
+	1. Conceptual
+	2. Logico
+	3. Físico
+
+
+Etidades: Sustanticvos obejtos clases , con propiedades.  Son las que van al disco duro
+
+1. modelo de conceptos clases u ENTIDADES
+
+2. Se transforma amodelo logico u TABLAS
+
+3. se pasa al modelo fisico comoo  ORACLE
+
+MODELO CONCEPTUAL:  Entidades(Sustantivos)
+
+1-1
+1 a muchos
+muchos a muchos
+
+--------> Se vuelve una columna
+
+
+La llave primaria del lado 1 migra al lado MUCHOS
+
+ENTIDAD vs COLUMNA
