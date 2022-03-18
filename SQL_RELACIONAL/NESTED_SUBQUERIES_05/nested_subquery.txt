@@ -1,0 +1,74 @@
+Una subquery es una expresión select-from-where que esta anidada dentro de otra query
+
+FORMAS DE HACER ANIDADOS DE SUBQUERIES:
+
+
+	SELECT A1 ,A2, ..., An
+	FROM r1, r2,...., rm
+	WHERE P
+
+	*FROM: 
+	ri : se puede remplazar con una subquery.
+
+	*WHERE:
+	P: se puede remplazar con una expresión de la forma:
+		B <operation> (subquery)
+		B es un atributo 
+
+	*SELECT:
+	Ai: se puede remplazar con una subuery que genere un único valor
+
+
+	+ find courses offered in Fall 2017 and Spring 2018
+
+		SELECT distinct course_id
+		FROM section
+		WHERE semester='Fall' and year=2017 and course_id in(SELECT course_id
+															FROM section
+															WHERE semester='Spring' and year=2018)
+
+	+find courses offered in Fall 2017 but not in 2018
+
+		SELECT distinct course_id 
+		FROM section
+		WHERE semester='Fall' and year=2017 and course_id is not in(SELECT course_id
+																	FROM section 
+																	WHERE semester='Spring' and year=2018)
+
+	+ Name all the instructors whose name is neither "Mozart" nor "Einstein"
+
+		SELECT DISTINCT name 
+		FROM instructor
+		WHERE name not in('Mozart', 'Einstein')
+
+	+ Find the total number of students (distinct) students who have taken course sections thaught by the instructor with ID 10101
+
+		SELECT count (distintc ID)
+		FROM takes 
+		WHERE (course_id, sec_id, semester, year) in (select course_id, sec_id, semester, year
+													from teaches
+													where teaches.ID= 10101)
+
+
+IN: en sitauciones es similar a INTERSECT y/o Join
+
+	+ Liste los estudiantes que han presentado exámen, esto es, tienen resultados
+
+	SELECT s.*
+	FROM stundents s
+	WHERE s.sid IN(
+		SELECT sid
+		FROM results)
+
+
+NOT IN: en situaciones es similar a MINUS
+
+	+ Liste los estudiantes que NO han presentado examen
+
+	SELECT s.*
+	FROM stundents s
+	WHERE s.sid NOT IN(
+		SELECT sid
+		FROM results)
+
+	SELECT 
