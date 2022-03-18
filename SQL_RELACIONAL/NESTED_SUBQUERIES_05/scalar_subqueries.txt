@@ -1,0 +1,30 @@
+Cuando se espera un único valor 
+
++ Liste todos los departamentos junto con el nombre del instictor en cada departamento.
+
+	SELECT dept_name, ( select name
+						from instructor 
+						where department.dept_name = instructor.dept_name) as instructor
+						from department
+
++ Liste el nombre del empleado y el nombre del departamento donde trabaja. Si el empleado no trabaja en ningun departamento debe aparecer en el listado.
+
+SELECT
+	e.employee_name, 
+	d.department_name 
+FROM 
+	employees e, 
+	departments d 
+WHERE 
+	e.department_id = d.department_id
+
+						este no muestra los valores NULL
+
+
+SELECT
+	e.employee_name, ( select department_name from departments d
+						WHERE e.department_id = d.department_id) as department_name
+						FROM
+						emmployees e;
+
+						Este si muestra los valores de NULL
