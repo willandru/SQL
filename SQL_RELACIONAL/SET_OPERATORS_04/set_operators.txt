@@ -1,11 +1,13 @@
 
-	SET OPERATORS
+SET OPERATORS
+
 
 UNION: Combina los resultados de 2 queries SIN DUPLICADOS en 1 sola query
 		Toma 2 conjuntos y devuelve la union de esos 2  conjuntos
 
-	- Cada Select debe tener el mismo número de columnas (misma aridad).
-	- Los campos utilizados deben tener los mismos tipos de datos.
+IMPORTANTE:
+ *Cada SELECT debe tener el mismo número de columnas (misma ARIDAD).
+ *Los campos utilizados deben tener los mismos TIPOS de datos.
 
 
 + Liste el nombre y apellido de los fundadores O empleados
