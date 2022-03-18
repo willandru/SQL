@@ -1,0 +1,32 @@
+The joins son usados tipicamente como Subqueries en el FROM
+Tres tipos de joins: Natural join, Inner join, Outer join
+
+NATRUAL JOIN: eMPAREJA RESULTADOS CON LOS MISMOS VALORES PARA TODOS LOS ATRIBUTOS EN COMUN, Y RETIENE SOLO 1 COPIA DE CADA COLUMNA EN COMUN
+
+	+Liste los nombres de los istructores junto con el course ID de los cursos que ellos enseñan
+
+			SELECT name, course_id
+			FROM students , takes
+			WHERE student.ID= takes.ID
+
+			SELECT name , course_id
+			FROM sudent NATURAL JOIN takes
+
+
+
+SELECT A1, A2,...., An
+FROM r1 natural join r2 natural join ... natural join rn
+WHERE P
+
+
+
+DANGEROUS IN natural join
+			
+
+
+
+OUTER JOIN: Una extension de join que omite perdida de información
+		
+	- left outer join
+	- right outer join
+	- full outer join
