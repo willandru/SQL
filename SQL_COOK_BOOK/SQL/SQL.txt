@@ -287,3 +287,94 @@ MASTERING SQL
 					ON(e.empno = eb.empno)
 					WHERE e.deptno =10) 
 				GROUP BY deptno
+
+
+
+
+
+				*******************************
+				ejerccicios extras : @willandru
+
+*DETERMINING WHETHER TWO TABLES HAVE THE SAME DATA:
+
+					create view V as
+					select * from emp where deptno != 10
+					union all
+					select * from emp where ename = 'WARD'
+
+
+
+
++Use the set operations MINUS and UNION ALL to find the difference between view V and table EMP combined with the difference between table EMP and view V:
+	(
+		SELECCT empno, ename, job, mgr, hiredate, sal, tomm, deptno, count(*) AS cnt
+		FROM V
+		GROUP BY empno, ename, job, mgr, hiredate, sal, comm, deptno
+
+		MINUS
+
+		SELECCT empno, ename, job, mgr, hiredate, sal, tomm, deptno, count(*) AS cnt
+		FROM emp
+		GROUP BY empno, ename, job, mgr, hiredate, sal, comm, deptno
+	)
+	UNION ALL
+	(
+		SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno, count(*) as cnt
+		FROM EMP
+		GROUP BY empno, ename, job, mgr, hiredate, sal, comm, deptno
+
+		MINUS
+
+		SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno, count(*) as cnt
+		FROM V
+		GROUP BY empno, ename, job, mgr, hiredate, sal, comm, deptno
+	)
+
+
+*PERFORMING JOINS WHEN USING AGGREGATES
+
+	select * from emp_bonus
+
+	EMPNO  RECEIVED    TYPE  
+	-----  -------     -----
+	7934   17/03/2005   1
+	7934   15/02/2005   2
+	7839   15/02/2005   3
+	7782   15/02/2005   1
+
+
+-> Name and bonus of employees from department 10
+
+
+	SELECT e.empno, e.ename, e.sal, e.depnto, 
+		e.sal* CASE WHEN eb.type=1 THEN .1
+					WHEN eb.type= 2 THEN .2
+					ELSE .3
+				END AS bonus
+	FROM emp e, emp_bonus eb
+	WHERE e.empno = eb.empno
+		AND e.deptno =10
+
+
+	EMPNO  ENAME    SAL   DEPTNO  BONUS
+	-----  -------  ----  ------  ------
+	7934   MILLER   1300    10 		130
+	7934   MILLER   1300	10  	260
+	7839   KING     5000	10 		1500
+	7782   CLARK    2450	10 		245
+
+
+
+	SELECT deptno, sum( DISTINCT sal) as total, sum(bonus) AS total_bonus
+	FROM 
+			(SELECT e.empno, e.ename, e.sal, e.depnto, 
+							e.sal* CASE WHEN eb.type=1 THEN .1
+										WHEN eb.type= 2 THEN .2
+										ELSE .3
+									END AS bonus
+				  FROM emp e, emp_bonus eb
+				  WHERE e.empno = eb.empno
+					AND e.deptno =10 )  x
+	GROUP BY deptno
+
+
