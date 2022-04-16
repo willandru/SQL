@@ -1,0 +1,43 @@
+USE-CASES: BasicFlow/ AlternateFlow / SpecialRequirements
+***ADD  A  CAR***
+
+
+***BROWSE CARS BY LOCATION***
+
+	BASIC FLOW
+
+
+	ALTERNATE FLOW
+
+
+	SPECIAL REQUIRMENTS
+
+
+
+
+***CREATE AN ACCOUNT***
+
+
+
+***DELETE AN ACCOUNT***
+
+
+
+
+***DELETE CARS***
+
+
+
+
+***LOGIN***
+***LOGOUT***
+***OWNER VIEW CAR***
+***RENT A CAR***
+***SEARCH CARS***
+***UPDATE A CAR***
+***VIEW CARS***
+
+
+
+
+

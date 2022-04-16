@@ -1,0 +1,148 @@
+ONLINE CAR RENTAL SYSTEM
+
+
+initial requeriment document:
+
+---> CREATE A DOMAIN MODEL
+------------------------------------------------
+
+""HOUSE OF CARS""
+
+Owners who wish to put their cars on rental and customers who wish to rent a car for a fixed period.
+
+:: 2.000 empleados en 100 agencias subsidiarias
+
+*Agencias subsidiarias = 100
+* Empleados = 2000
+
+
+EACH SUBSIDIARY PROPOSES A LIST OF CARS FOR RENT. (CADA AGENCIA TIENE UNA LISTA DE CARROS PARA RENTAR)
+
+PARA AGREGAR UN CARRO A LA LISTA DE CARROS PARA LA RENTA:
+	- eL PROPIETARIO del CARRO contacta a la AGENCIA SUBSIDIARIA más cercana a el carro que se va a poner a la renta.
+		- el PROPIETARIO otorga datos de su CARRO y se pone de acuerdo con el MANAGER de la agencia en un PAGO MENSUAL.
+
+
+UNA VEZ EL CARRO SE HA PUESTO A LA RENTA: <<HOUSE OF CARS>> takes over
+	- Se genera un CONJUNTO DE SERVICIOS paranasegurar que el carro es rentado por el mejor RETORNO posible a el propietario y por supuesto a la compañia.
+	ENTRE LOS SERVICIOS:
+		- HouseOfCars se reune y evalue a el CANDIDATO RENTADOR (el cliente).
+		- Organiza visitas a el carro.
+		- Genera publicidad en el periodico cuado se necesita.
+		- Negocea el ARRENDIAMIENTO
+	* <<House of Cars>> ASUME LA RESPONSABILIDAD DE LOS CARROS  asi como tambien se encarga de COBRAR LA RENTA. 
+
+UNA PERSONA INTERESADA EN EL ARRENDAMIENTO DE UN CARRO:
+
+	- Registrarse como un usuario en la COMPAÑIA
+	-Una entrevista se lleva a cabo antes de se acepatodo como CLIENTE
+	- Informacion personal, preferencias sobre carros se busca durante la entrevista
+	-Los USUARIOS REGISTRADOS reciven un REPORTE SEMANAL de los CARROS DISPONIBLES PARA LA RENTA
+	-La AGENCIA propone visitar los carros PROPUESTOS  a los clientes, 
+
+CUANDO UN CLIENTE DECIDE RENTAR UN CARRO:
+	-un EMPLEADO prepara el arrendamiento por una duración pre acordada.
+	- Al final de la renta el usuario puede solicitar prolongar la renta.
+
+
+
+	DESARROLLAR UN SISTEMA ONLINE PARA AYUDAR A <<HOuse of Cars>> INTERACT QICKLY AND EFFICIENTLY WITH ITS CUSTOMERS.
+
+
+
+
+PRECONDICIONES:
+	-El propietario  es "Registrado en la web" de OCR.
+
+POSTCINDICCIONES:
+	- SATISFACTORIOS: Si satisfactorio, la informacion sobre el nuevo caroo se sube a la tienda
+	- NO SATISFACTORIOS: El actor es informado sobre el problema
+
+
+::::::::
+*El propietario de un auto quiere agregarlo a la pagina web ed la AGENCIA*
+::::::::
+BASIC FLOW
+
+1. OCR ñe pide al propietario completar los requisitos:
+	- 5 fotos (1MB max, format JPG)
+	- Placa del carro
+	- Tipo de carro
+	- Seleccione la Ubicacion --> BARRIO
+	- El precio de la RENTA
+	- ID unico del propietario
+
+(Para el atributo UBICACION se debe tener el registro del PAIS, DEPARTAMENTO, MUNICIPIO Y BARRIO)
+
+2. El propietaroio llena los requisitos y envia la peticion.
+3. OCR guarda las fotos y la informacion sobre el carro. Un ID es asignado a cada nuevo carro insertado.
+4.  OCR informa al PROPIETARIO sobre que el CARRO fue almacenado satiscaftoriamente
+5. Fin del registro
+			
+			ALTERNATE FLOW:
+
+			A1. MISSING INFORMATION
+
+			3. si no se enTRO LA INFORMACION CORRECTAMENTE durante el paso 1.
+
+					1. OCR muesrtra los datos del carro agreagdo e indica que INFORMACION ESTA INCORRECTA
+					2. Se termina con el paso numero 2.
+
+
+			A2. DUPLICATE FILENAME
+
+			3. ocurre en este paso si LA PLACA ya existe en el sistema OCR
+
+					1. Se ternina con paso "3".
+
+
+			REQUERIMIENTOS ESPECIALES
+
+
+			OCR de manejar 10 operaciones concurrentes de añadir carro. Agregar a carro no debe tomar más de 10 segundos. 
+
+
+::::::
+	USE CASE: Buscar carros por la UBICACION
+
+		PRECONDICIONES:
+			- El visitante esta en la pagina web OCR
+		POSTCONDICIONES:
+			- SATISFACTORIO: Carros que concuerdan el input del usuario se MUESTRAN
+
+
+
+		BASIC FLOW: El escenario comienza cuando el VISITANTE quiere buscar fotos de carros por UBICACION.
+
+		1. OCR le pregunta al VISITANTE a entrar a una UBICACION (de la lista de ubicaciones disponibles)
+
+		2. un VISITANTE selecciona la UBICACION y envia la peticion.
+		3. "OCRUc View Cars"
+		4. Termina
+
+
+
+		ALTERNATE FLOWS:
+
+		A1. No Location Available
+
+		Ocurre en el paso 1 de e flujo basico si la condicion no esta disponble.
+
+		1. OCR informa que la ubicacion no esta disponible
+		2. Fin
+
+	REQUERIMIENTOS ESPECIALES: 
+	OCR debe manejar 10 instancias al tiempo de busqueda. NO debe tomar m'as de 10 segundos.
+
+
+::::::
+
+
+CREAR UNA CUENTA*
+
+	PRECONDICIONES:
+		-El archivo de el CLIENTE o de el PROPIETARIO DEL VEHICULO ya ha sido revisada previemente
+		-El agente se encuentra en LINEA en la web.
+	POSTCONDICIONES:
+		-Una nueva cuenta es agregada a el sstema OCR.
+		
