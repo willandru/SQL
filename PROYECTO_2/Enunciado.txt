@@ -146,3 +146,48 @@ CREAR UNA CUENTA*
 	POSTCONDICIONES:
 		-Una nueva cuenta es agregada a el sstema OCR.
 		
+
+
+USE-CASES: BasicFlow/ AlternateFlow / SpecialRequirements
+-Add a Car
+
+
+- Browse Cars By Location
+
+	BASIC FLOW
+
+
+	ALTERNATE FLOW
+
+
+	SPECIAL REQUIRMENTS
+
+
+
+
+-Create an Account
+
+
+
+- Delete Account
+
+
+
+
+- Delete Cars
+
+
+
+
+- Login
+- Loguot
+- Owner View Car
+- Rent Car
+- Search Cars
+- Update Car
+- View Cars
+
+
+
+
+

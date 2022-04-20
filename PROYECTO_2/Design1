@@ -41,3 +41,94 @@ USE-CASES: BasicFlow/ AlternateFlow / SpecialRequirements
 
 
 
+
+
+
+
+
+
+
+
+SQL CONSULTAS:
+
+1. Cantidad total de carros rentados por cliente por periodos (mes, año)
+
+| CLIENTE | CARROS RENTADOS POR MES  |  CARROS RENTADOS POR AÑO	|
+------------------------------------------------------------------
+  cliente_1			2								24
+  cliente_2			1 								12
+
+2. Suma total pagada a los dueños por las rentas de sus carros (suma del valor de renta estipulado)
+
+
+| DEÑO CARRO | TOTAL PAGADO  |  
+---------------------------
+  dueño_1			1.500		- POR CARRO /POR MES
+  dueño_2			3.000
+
+  3. Suma total de comisiones que la empresa obtiene por las rentas por periodos, por dueño.
+
+
+| DUEÑO CARRO |  TOTAL COMISIONES RECIBIDA (POR AÑO)|
+-----------------------------------------------------
+  dueño_1					1000						
+  dueño_2					1200													
+
+
+4. Suma y cantidad de rentas por cliente por periodo
+
+| CLIENTE    | CARROS RENTADOS/MES| 
+------------------------------------
+  cliente_1			2								
+  cliente_2			1 								
+    ...
+  SUMA TOTAL		15
+
+
+ 5. Numero total de acrros por pais/departamento/municipio y ubicacion
+
+ PAIS  | TOTAL_CARROS | UBICACION
+
+ 		DEPTO | TOT_CARR | UBICACION
+ 				MUNI | TOT_CARR  | UBICACION
+
+ 6. Reporte de pagos por periodo por entidad autorizada
+
+ 	ENTIDAD | PAGOS MENSUALES | 
+ 	----------------------------
+
+ 7. Reporte por peirodos (año, mes) de impuestos que se deben pagar por cada renta
+
+ RENTA_ID | PERIODO_RENTA | IMPUESTO_A_PAGAR
+ ----------------------------------------------
+
+ 8. cUALES SON LOS CARROS MAS RENTADOS?
+
+  CARRO_ID | VECES_RENTADAS
+    --------------------------
+
+9.¿ En que departamento se rentan mas carros?
+
+	DEPARTAMENTO_ID | CARROS_RENTADOS
+	---------------------------------
+
+10. ¿ LOS CARROS MÁS VISITADOS POR LOS VISITANTES(EN LA PAGINA WEB)?
+
+CARRO_ID | NUMERO_VISITAS
+---------------------------
+
+
+
+
+
+
+ENTIDADES:
+
+
+-EMPRESA: GERENTE
+ 	MUCHOS PAISES|DEPARTAMENTOS|MUNICIPIOS
+
+-DUEÑOS DE CARROS
+
+-ARRENDADORES O CLIENTES
+
