@@ -1,0 +1,23 @@
+ANAOMALIAS.
+
+lA TABLA ESTA MAL STRUCTURADA _> no ESTA NORMALIZADA-> DEBEMOS DESCOMPONERLA
+
+
+Pasos para normalizar: 1F normal :campos mulivariadaos : grupos repetitivos
+
+APLICACION FORMAS NORMALES: La primera forma normal, la segunda forma nnormal, la tercera forma normal
+
+RTenove atributos multibariados o grupos repetitivos
+remover depenedecia paricales
+remoevr dependiecias transitivas
+
+Fora 4 y 5: vida real: 
+
+Dependencias funcionales y las llaves
+
+Dependencias TRansitivas: Atributo definico por la llave y no una parte.
+
+
+ENTREGA ABRIL 29:::
+PARCIAL 2 GRUPAL :: VIERNES 6 MAYO 
+PARCIAL 2 INDIVIDUAL : MIERCOLES 11 MAYO

@@ -1,0 +1,15 @@
+~~~~~~~~~~~~~~~QUERIES_P2_G2
+
+1. Produzca un listado que contenga: fecha de la renta, placa del carro rentado, 
+nombre del cliente que renta, total de la renta (TVR), total de descuentos (TD),
+total de impuestos( TI) y total a pagar
+
+SELECT (dia.dia||'/'||mes.mes||'/'||year.year),carro.Placa, cliente.Nombre,
+	(propietario.renta+ (porpietario.renta)*(#), 
+
+WHERE (year.Id_year=fecha.yearId_year) AND (mes.Id_mes = fecha.mesId_mes)AND
+      (dia.Id_dia=fecha.diaId_dia)AND (carro.Placa=renta.carroPlaca) AND 
+      (cliente.correo = renta.clienteCorreo) AND (
+
+
+
