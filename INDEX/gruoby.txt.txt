@@ -1,0 +1,5 @@
+select 
+d.region_name , e.country_name, count(*)
+from regions d, countries e, locations f
+where d.region_id=f.country_id
+group by d.region_name, e.country_name
