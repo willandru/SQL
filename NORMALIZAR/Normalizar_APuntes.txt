@@ -1,0 +1,9 @@
+ESQUEMA NO NORMALIZADO: Facil consultar, ineficiente en CRUD
+ESQUEMAS NRMALIZADOS: Dificil consultar, Eficiente CRUD
+
+*Criterios buen diseño:
+Redundancia:Tablas de referencia
+Grupos Repetitivos
+REdudndancia: ANomalias actualizacion 
+Descomposicion
+Formas NOrmales
