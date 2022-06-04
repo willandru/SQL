@@ -7,3 +7,9 @@ Grupos Repetitivos
 REdudndancia: ANomalias actualizacion 
 Descomposicion
 Formas NOrmales
+------------------------------------------
+
+Dependencias FUncionales y NOrmalizacion de DB:
+
+*informacion redundante en las tuplas
+*anomalías de actualización
