@@ -93,7 +93,9 @@ public class RepositorioLibro {
         SQL.append(" WHERE AUTHOR_LAST_NAME like ? or RATING >= ?");
         try (
                 Connection conex = DriverManager.getConnection(Constantes.THINCONN, Constantes.USERNAME, Constantes.PASSWORD);
-                PreparedStatement ps = conex.prepareStatement(SQL.toString());) {
+                PreparedStatement ps = conex.prepareStatement(SQL.toString());
+                ) 
+        {
             //se asignan los valores a los parametros
             ps.setString(1, "%" + p_author + "%");
             ps.setInt(2, p_rating);
